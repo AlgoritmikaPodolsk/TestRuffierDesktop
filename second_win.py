@@ -1,11 +1,17 @@
 from instr import *
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTimer, QTime
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QLineEdit)
 
 
-
-
+class Experiment():
+    def __init__(self, age, test1, test2, test3):
+        self.age = age
+        self.t1 = test1
+        self.t2 = test2
+        self.t3 = test3
+        
 class TestWin(QWidget):
     def __init__(self):
         super().__init__()
@@ -31,6 +37,8 @@ class TestWin(QWidget):
         self.test_button3 = QPushButton(txt_starttest3)
         self.txt_hinttest2 = QLineEdit(txt_hinttest2)
         self.txt_hinttest3 = QLineEdit(txt_hinttest3)
+        self.send_button = QPushButton(txt_sendresults)
+        self.txt_timer = QLabel(txt_timer)
         self.h_line = QHBoxLayout()
         self.r_line = QVBoxLayout()
         self.l_line = QVBoxLayout()
@@ -47,12 +55,70 @@ class TestWin(QWidget):
         self.l_line.addWidget(self.test_button3, alignment = Qt.AlignLeft)
         self.l_line.addWidget(self.txt_hinttest2, alignment = Qt.AlignLeft)
         self.l_line.addWidget(self.txt_hinttest3, alignment = Qt.AlignLeft)
-        self.h_line.addLayout(self.r_line)
+        self.l_line.addWidget(self.send_button, alignment = Qt.AlignCenter)
+        self.r_line.addWidget(self.txt_timer, alignment = Qt.AlignCenter)
         self.h_line.addLayout(self.l_line)
+        self.h_line.addLayout(self.r_line)
         self.setLayout(self.h_line)
+    def timer_test(self):
+        global time
+        time = QTime(0, 1, 0)
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.timer1Event)
+        self.timer.start(1000)
+        txt_timer = str(self.timer)
+    def timer1Event(self):
+        global time
+        time = time.addSecs(-1)
+        self.txt_timer.setText(time.toString("hh:mm:ss"))
+        self.txt_timer.setFont(QFont("Times", 36, QFont.Bold))
+        self.txt_timer.setStyleSheet("color: rgb(0, 0, 0)")
+        if time.toString("hh:mm:ss") == "00:00:00":
+            self.timer.stop()
+    def timer_sits(self):
+        global time
+        time = QTime(0, 0, 30)
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.timer2Event)
+        self.timer.start(1500)
+        txt_timer = str(self.timer)
+    def timer2Event(self):
+        global time
+        time = time.addSecs(-1)
+        self.txt_timer.setText(time.toString("hh:mm:ss")[6:8])
+        self.txt_timer.setFont(QFont("Times", 36, QFont.Bold))
+        self.txt_timer.setStyleSheet("color: rgb(0, 0, 0)")
+        if time.toString("hh:mm:ss") == "00:00:00":
+            self.timer.stop()
+    def timer_final(self):
+        global time
+        time = QTime(0, 1, 0)
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.timer3Event)
+        self.timer.start(1000)
+        txt_timer = str(self.timer)
+    def timer3Event(self):
+        global time
+        time = time.addSecs(-1)
+        self.txt_timer.setText(time.toString("hh:mm:ss"))
+        self.txt_timer.setFont(QFont("Times", 36, QFont.Bold))
+        if int(time.toString("hh:mm:ss")[6:8]) >= 45:
+            self.txt_timer.setStyleSheet("color: rgb(0, 255, 0)")
+        elif int(time.toString("hh:mm:ss")[6:8]) <= 15:
+            self.txt_timer.setStyleSheet("color: rgb(0, 255, 0)")
+        else:
+            self.txt_timer.setStyleSheet("color: rgb(0, 0, 0)")
+        if time.toString("hh:mm:ss") == "00:00:00":
+            self.timer.stop()
     def connects(self):
-        pass
-
+        self.test_button1.clicked.connect(self.timer_test)
+        self.test_button2.clicked.connect(self.timer_sits)
+        self.test_button3.clicked.connect(self.timer_final)
+        self.send_button.clicked.connect(self.next_click)
+    def next_click(self):
+        self.hide()
+        self.exp = Experiment(self.input_age.text(), self.txt_hinttest1.text(), self.txt_hinttest2.text(), self.txt_hinttest3.text())
+        self.tw = FinalWin(self.exp)
 if __name__ == "__main__":
     app = QApplication([])
     main_win = TestWin()
