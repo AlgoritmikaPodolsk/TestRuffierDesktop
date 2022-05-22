@@ -133,7 +133,7 @@ class TestWin(QWidget):
                 return txt_res4
             else:
                 return txt_res5
-        if self.exp.page <= 14 and self.exp.page >= 13:
+        if self.exp.age <= 14 and self.exp.age >= 13:
             if self.index >= 16.5:
                 return txt_res1
             elif self.index<16.5 and self.index>=12.5:
@@ -144,7 +144,7 @@ class TestWin(QWidget):
                 return txt_res4
             else:
                 return txt_res5
-        if self.exp.page <= 12 and self.exp.page >= 11:
+        if self.exp.age <= 12 and self.exp.age >= 11:
             if self.index >= 18:
                 return txt_res1
             elif self.index<18 and self.index>=14:
@@ -155,7 +155,7 @@ class TestWin(QWidget):
                 return txt_res4
             else:
                 return txt_res5
-        if self.exp.page <= 10 and self.exp.page >= 9:
+        if self.exp.age <= 10 and self.exp.age >= 9:
             if self.index >= 19.5:
                 return txt_res1
             elif self.index<19.5 and self.index>=15.5:
@@ -166,7 +166,7 @@ class TestWin(QWidget):
                 return txt_res4
             else:
                 return txt_res5
-        if self.exp.page <= 8 and self.exp.page >= 7:
+        if self.exp.age <= 8 and self.exp.age >= 7:
             if self.index >= 21:
                 return txt_res1
             elif self.index<21 and self.index>=17:
