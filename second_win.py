@@ -1,4 +1,5 @@
 from instr import *
+from final_win import *
 from PyQt5.QtCore import Qt, QTimer, QTime
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (
@@ -176,7 +177,6 @@ class TestWin(QWidget):
                 return txt_res4
             else:
                 return txt_res5
-
 if __name__ == "__main__":
     app = QApplication([])
     main_win = TestWin()
