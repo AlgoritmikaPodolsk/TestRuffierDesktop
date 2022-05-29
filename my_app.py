@@ -1,5 +1,5 @@
 from instr import *
-from second_win import TestWin
+from final_win import TestWin
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout
 class MainWin(QWidget):
